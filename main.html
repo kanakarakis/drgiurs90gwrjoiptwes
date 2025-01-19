@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Σάιτ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .header {
+            font-size: 70px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #3b3b3b;
+        }
+
+        .subheader {
+            font-size: 18px;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .money-amount {
+            font-size: 60px;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 40px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .crypto-button {
+            font-size: 18px;
+            padding: 12px 40px;
+            background-color: #0070ba;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .crypto-button:hover {
+            background-color: #005f8d;
+        }
+
+        .crypto-button:active {
+            background-color: #004f73;
+            transform: scale(0.98);
+        }
+
+        .crypto-button:focus {
+            outline: none;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+            overflow: auto; /* Enable scroll if needed */
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #0070ba;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%;
+            transition: background-color 0.3s;
+        }
+
+        .modal-button:hover {
+            background-color: #005f8d;
+        }
+
+        .modal-button:active {
+            background-color: #004f73;
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            Τα Λεφτά
+        </div>
+        <div class="money-amount" id="balance">
+            0.00$
+        </div>
+        <div class="subheader">
+            Ανακαλύψτε τον κόσμο των κρυπτονομισμάτων και των επιχειρήσεων τους.
+        </div>
+        <div class="button-container">
+            <button class="crypto-button">Crypto Εταιρείες</button>
+            <button class="crypto-button" id="moreBtn">Περισσότερα</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                Επιλογές Συναλλαγών
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-button" id="withdrawBtn">Withdraw</button>
+                <button class="modal-button" id="depositBtn">Deposit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get modal element
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var moreBtn = document.getElementById("moreBtn");
+
+        // When the user clicks the button, open the modal
+        moreBtn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on one of the modal buttons, close the modal
+        document.getElementById("withdrawBtn").onclick = function() {
+            alert("Η επιλογή 'Withdraw' επιλέχθηκε!");
+            modal.style.display = "none";
+        }
+
+        document.getElementById("depositBtn").onclick = function() {
+            // Open PayPal link for deposit
+            window.location.href = "https://paypal.me/darkkillerzzez?country.x=GR&locale.x=el_GR";
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Function to simulate updating the balance
+        function updateBalance(amount) {
+            var currentBalance = parseFloat(document.getElementById("balance").textContent.replace('$', ''));
+            currentBalance += amount;
+            document.getElementById("balance").textContent = currentBalance.toFixed(2) + "$";
+        }
+
+        // Simulate PayPal payment confirmation
+        // This is a mockup. In a real system, you would confirm payment through PayPal's IPN or another API
+        window.addEventListener("focus", function() {
+            // Check if the payment is done and update the balance
+            // This is a mock event, you can replace it with a real confirmation of the payment
+            var paymentConfirmed = true; // This should be true if the payment was confirmed by PayPal
+            if (paymentConfirmed) {
+                var amountDeposited = 1.00; // Example: 1 EUR deposited via PayPal
+                updateBalance(amountDeposited);  // Example amount added to the balance
+                alert("Η πληρωμή ολοκληρώθηκε! Το balance σας είναι τώρα " + document.getElementById("balance").textContent + 
+                ". Η αιτία: Τα χρήματα μπήκαν τυχαία.");
+            }
+        });
+    </script>
+
+</body>
+</html>
